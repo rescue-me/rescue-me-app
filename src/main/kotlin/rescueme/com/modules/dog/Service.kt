@@ -2,12 +2,19 @@ package rescueme.com.modules.dog
 
 import arrow.core.Either
 import arrow.core.computations.either
-import rescueme.com.modules.shared.DomainException
 import rescueme.com.modules.shared.Has
-import rescueme.com.modules.shared.RepositoryGenericException
 
-suspend fun <R> R.save(dog: Dog) where R : Has.DogRepository, R : Has.Logger =
-    either<DomainException, Dog> {
-        Either.catch { repository.save(dog).also { logger.info("### Saved dog with id ${dog.id}") } }
-            .mapLeft { RepositoryGenericException(it) }.bind()
+suspend fun <R> R.save(dog: Dog): Either<Throwable, Dog> where R : Has.DogRepository, R : Has.Logger =
+    either {
+        repository.save(dog).also { logger.info("### Saved dog with id ${dog.id}") }
+    }
+
+suspend fun <R> R.getAll(): Either<Throwable, List<Dog>> where R : Has.DogRepository, R : Has.Logger =
+    either {
+        repository.getAll().also { logger.info("### Retrieved dogs $it") }
+    }
+
+suspend fun <R> R.getByShelter(shelter: String): Either<Throwable, List<Dog>> where R : Has.DogRepository, R : Has.Logger =
+    either {
+        repository.getAll().filter { it.shelterName == shelter }
     }

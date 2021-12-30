@@ -9,8 +9,6 @@ class MongoDBUserRepository(ctx: Context) : Repository {
 
     private val database = ctx.database
 
-    override suspend fun save(dog: Dog): Dog {
-        database[dog.id.toString()] = dog.name
-        return dog
-    }
+    override suspend fun save(dog: Dog) = database.put(dog.id.toString(), dog).let { dog }
+    override suspend fun getAll(): List<Dog> = database.map { it.value }
 }
