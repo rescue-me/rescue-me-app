@@ -10,4 +10,8 @@ sealed interface Has {
     interface DogRepository {
         val repository: Repository
     }
+
+    interface NotificationRepository {
+        val notificationRepository: rescueme.com.modules.shared.NotificationRepository
+    }
 }

@@ -5,7 +5,7 @@ import rescueme.com.modules.shared.DomainException
 import rescueme.com.modules.shared.Has
 import rescueme.com.modules.shared.RepositoryGenericException
 
-interface Context : Has.Logger, Has.DogRepository
+interface Context : Has.DogRepository, Has.NotificationRepository
 
 suspend fun Context.bindPost(dog: Dog): Either<DomainException, Dog> =
     save(dog).mapLeft { RepositoryGenericException(it) }

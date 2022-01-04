@@ -10,20 +10,20 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import rescueme.com.effects.logger.ApplicationKtorLogger
+import rescueme.com.effects.repositories.kafka.KafkaMessagePublisher
 import rescueme.com.effects.repositories.mongodb.MongoDBLayer.Companion.getLayer
 import rescueme.com.effects.repositories.mongodb.MongoDBUserRepository
 import rescueme.com.entry_point.handleResult
 import rescueme.com.entry_point.shared.badRequest
 import rescueme.com.modules.dog.*
-import rescueme.com.modules.shared.Logger
+import rescueme.com.modules.shared.NotificationRepository
 
 typealias BadRequest = TextContent
 
 fun Application.module() {
     moduleWith(object : Context {
-        override val logger: Logger = ApplicationKtorLogger(log)
         override val repository: Repository = MongoDBUserRepository(getLayer())
+        override val notificationRepository: NotificationRepository = KafkaMessagePublisher()
     })
 }
 
@@ -41,16 +41,16 @@ fun Application.moduleWith(context: Context) {
                 }
             }
             post {
-                val result = either<BadRequest, DogPayload> {
+                val result = either<BadRequest, Dog> {
                     Either.catch { call.receive<DogPayload>() }
+                        .map { it.toDog() }
                         .mapLeft { badRequest(it.message ?: "Received an invalid Dog") }
                         .bind()
                 }
                 when (result) {
                     is Either.Left -> call.respond(result.value)
-                    is Either.Right -> call.respond(handleResult { context.bindPost(result.value.toDog()) })
+                    is Either.Right -> call.respond(handleResult { context.bindPost(result.value) })
                 }
-
             }
         }
 
