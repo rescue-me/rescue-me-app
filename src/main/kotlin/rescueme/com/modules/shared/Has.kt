@@ -1,12 +1,15 @@
 package rescueme.com.modules.shared
 
+import rescueme.com.modules.users.Repository
+
+
 sealed interface Has {
     interface Logger {
         val logger: rescueme.com.modules.shared.Logger
     }
 
     interface DogRepository {
-        val repository: DogRepository
+        val repository: rescueme.com.modules.dog.Repository
     }
 
     interface NotificationRepository {
@@ -14,6 +17,10 @@ sealed interface Has {
     }
 
     interface ShelterRepository {
-        val repository: ShelterRepository
+        val repository: rescueme.com.modules.shelter.Repository
+    }
+
+    interface UserRepository {
+        val repository: Repository
     }
 }
