@@ -3,6 +3,7 @@ package rescueme.com.modules.dog
 import arrow.core.Either
 import arrow.core.computations.either
 import rescueme.com.modules.shared.Has
+import java.util.*
 
 suspend fun <R> R.save(dog: Dog): Either<Throwable, Dog> where R : Has.DogRepository, R : Has.NotificationRepository =
     either {
@@ -18,5 +19,7 @@ suspend fun <R> R.getAll(): Either<Throwable, List<Dog>> where R : Has.DogReposi
 
 suspend fun <R> R.getByShelter(shelter: String): Either<Throwable, List<Dog>> where R : Has.DogRepository =
     either {
-        repository.getAll().filter { it.shelterName.name == shelter }
+        val shelterId = UUID.fromString(shelter)
+        repository.getByShelter(shelterId)
     }
+

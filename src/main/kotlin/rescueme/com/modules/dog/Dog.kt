@@ -1,15 +1,16 @@
 package rescueme.com.modules.dog
 
+import rescueme.com.modules.shelter.ShelterId
 import java.util.*
 
 data class Dog(
     val id: DogId,
     val name: DogName,
-    val shelterName: ShelterName
+    val shelterId: ShelterId
 ) {
     companion object {
-        fun apply(id: String, name: String, shelterName: String) =
-            Dog(DogId.apply(id), DogName(name), ShelterName(shelterName))
+        fun apply(id: String, name: String, shelterId: String) =
+            Dog(DogId.apply(id), DogName(name), ShelterId.apply(shelterId))
     }
 }
 
@@ -21,6 +22,3 @@ data class DogId(val value: UUID) {
 
 @JvmInline
 value class DogName(val name: String)
-
-@JvmInline
-value class ShelterName(val name: String)
