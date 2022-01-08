@@ -1,11 +1,10 @@
 package rescueme.com.modules.users
 
-import arrow.core.computations.either
-import rescueme.com.modules.shared.DomainException
 import rescueme.com.modules.shared.Has
+import rescueme.com.modules.shared.ResourceNotFoundException
 import java.util.*
 
-suspend fun <R> R.retrieveIfExists(uuid: UUID) where R : Has.UserRepository =
-    either<DomainException, User> {
-        repository.getByUUID(uuid).bind()
+suspend fun <R> R.getByUUID(uuid: UUID) where R : Has.UserRepository =
+    repository.getByUUID(uuid).toEither {
+        ResourceNotFoundException("User with uuid $uuid not found")
     }

@@ -3,6 +3,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 val arrow_version: String by project
 val kotest_version: String by project
+val mockk_version: String by project
 
 plugins {
     application
@@ -34,6 +35,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotest_version")
     testImplementation("io.kotest:kotest-runner-junit5:$kotest_version")
     testImplementation("io.kotest:kotest-property:$kotest_version")
+    testImplementation("io.mockk:mockk:$mockk_version")
 }
 
 tasks.withType<Test> {
