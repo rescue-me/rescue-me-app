@@ -4,6 +4,7 @@ val logback_version: String by project
 val arrow_version: String by project
 val kotest_version: String by project
 val mockk_version: String by project
+val kmongo_version: String by project
 
 plugins {
     application
@@ -13,6 +14,7 @@ plugins {
 
 group = "rescueme.com"
 version = "0.0.1"
+
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 }
@@ -27,6 +29,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
     implementation("io.arrow-kt:arrow-core:$arrow_version")
     implementation("io.arrow-kt:arrow-fx-coroutines:$arrow_version")
     implementation("io.arrow-kt:arrow-optics:$arrow_version")
