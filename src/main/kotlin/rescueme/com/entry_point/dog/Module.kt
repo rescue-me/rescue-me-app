@@ -12,7 +12,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import rescueme.com.effects.repositories.kafka.KafkaMessagePublisher
 import rescueme.com.effects.repositories.mongodb.MongoDBLayer.Companion.getLayer
-import rescueme.com.effects.repositories.mongodb.MongoDBUserRepository
+import rescueme.com.effects.repositories.mongodb.MongoDBDogsRepository
 import rescueme.com.entry_point.handleResult
 import rescueme.com.entry_point.shared.badRequest
 import rescueme.com.modules.dog.*
@@ -22,7 +22,7 @@ typealias BadRequest = TextContent
 
 fun Application.module() {
     moduleWith(object : Context {
-        override val repository: Repository = MongoDBUserRepository(getLayer())
+        override val repository: Repository = MongoDBDogsRepository(getLayer())
         override val notificationRepository: NotificationRepository = KafkaMessagePublisher()
     })
 }

@@ -6,7 +6,8 @@ import rescueme.com.modules.dog.Repository
 import java.util.*
 
 interface Context : HasLive.DatabaseClient
-class MongoDBUserRepository(ctx: Context) : Repository {
+
+class MongoDBDogsRepository(ctx: Context) : Repository {
 
     private val database = ctx.database
 

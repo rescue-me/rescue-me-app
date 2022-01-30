@@ -8,7 +8,10 @@ interface Props {
 
 }
 
-class MongoDBLayer private constructor(props: Props) : LiveDogContext {
+class MongoDBLayer private constructor(
+    props: Props
+) : LiveDogContext, LiveUserContext {
+
     override val database: MutableMap<String, Dog> = mutableMapOf()
 
     companion object {
