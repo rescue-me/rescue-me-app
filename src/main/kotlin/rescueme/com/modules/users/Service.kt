@@ -13,7 +13,7 @@ suspend fun <R> R.getByUUID(uuid: UUID) where R : Has.UserRepository =
 
 suspend fun <R> R.save(uuid: UUID) where R : Has.UserRepository, R : Has.NotificationRepository =
     either<DomainException, User> {
-        val user = User.apply(uuid.toString())
+        val user = User.invoke(uuid.toString())
         repository.save(user).bind()
             .also { notificationRepository.publish(UserCreated.apply(user)) }
     }

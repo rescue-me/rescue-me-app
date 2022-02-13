@@ -6,6 +6,7 @@ import rescueme.com.modules.shared.Has
 
 interface Context : Has.ShelterRepository
 
-fun Context.bindGetAll(): Either<DomainException, List<Shelter>> = TODO()
-fun Context.bindPost(): Either<DomainException, Shelter> = TODO()
-fun Context.bindGetByProvince(): Either<DomainException, List<Shelter>> = TODO()
+suspend fun Context.bindGetAll(): Either<DomainException, List<Shelter>> = TODO()
+suspend fun Context.bindPost(): Either<DomainException, Shelter> = TODO()
+suspend fun Context.bindGetByProvince(province: String): Either<DomainException, List<Shelter>> = TODO()
+suspend fun Context.getById(shelterId: String): Either<DomainException, Shelter> = TODO()

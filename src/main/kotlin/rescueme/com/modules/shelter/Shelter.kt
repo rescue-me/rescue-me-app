@@ -9,9 +9,9 @@ data class Shelter(
     val province: Province
 ) {
     companion object {
-        fun apply(id: String, shelterName: String, provinceName: String): Shelter =
+        operator fun invoke(id: String, shelterName: String, provinceName: String): Shelter =
             Shelter(
-                ShelterId.apply(id),
+                ShelterId(id),
                 ShelterName(shelterName),
                 Province.apply(provinceName)
             )
@@ -20,7 +20,7 @@ data class Shelter(
 
 data class ShelterId(val value: UUID) {
     companion object {
-        fun apply(value: String) = ShelterId(UUID.fromString(value))
+        operator fun invoke(value: String) = ShelterId(UUID.fromString(value))
     }
 }
 

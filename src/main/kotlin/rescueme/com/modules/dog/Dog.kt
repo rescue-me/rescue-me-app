@@ -9,14 +9,14 @@ data class Dog(
     val shelterId: ShelterId
 ) {
     companion object {
-        fun apply(id: String, name: String, shelterId: String) =
-            Dog(DogId.apply(id), DogName(name), ShelterId.apply(shelterId))
+        operator fun invoke(id: String, name: String, shelterId: String) =
+            Dog(DogId(id), DogName(name), ShelterId(shelterId))
     }
 }
 
 data class DogId(val value: UUID) {
     companion object {
-        fun apply(value: String) = DogId(UUID.fromString(value))
+        operator fun invoke(value: String) = DogId(UUID.fromString(value))
     }
 }
 

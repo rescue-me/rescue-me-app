@@ -12,6 +12,6 @@ import java.util.*
 interface LiveUserContext : HasLive.DatabaseClient
 
 class MongoDBUsersRepository(ctx: LiveUserContext) : Repository {
-    override suspend fun getByUUID(uuid: UUID): Option<User> = Some(User.apply(uuid.toString()))
+    override suspend fun getByUUID(uuid: UUID): Option<User> = Some(User(uuid.toString()))
     override suspend fun save(user: User): Either<DomainException, User> = Either.Right(user)
 }

@@ -10,7 +10,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import rescueme.com.modules.shared.BadRequest
 import rescueme.com.modules.shared.NotificationRepository
 import rescueme.com.modules.shared.RepositoryGenericException
@@ -23,7 +22,7 @@ class UsersCoreTest : FunSpec({
 
     val uuidString = "5f42a79c-6579-43ff-959d-c887d9738523"
     val uuid = UUID.fromString("5f42a79c-6579-43ff-959d-c887d9738523")
-    val user = User.apply(uuidString)
+    val user = User.invoke(uuidString)
 
     val context = object : Context {
         override val repository: Repository = mockk()
