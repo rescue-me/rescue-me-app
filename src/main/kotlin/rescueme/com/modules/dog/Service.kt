@@ -11,7 +11,7 @@ typealias DogOutcome<R> = Either<Throwable, R>
 suspend fun <R> R.save(dog: Dog): DogOutcome<Dog> where R : Has.DogRepository, R : Has.NotificationRepository =
     either {
         val dogSaved = repository.save(dog)
-        notificationRepository.publish(DogCreated.apply(dogSaved))
+        notificationRepository.publish(DogCreated(dogSaved))
         dogSaved
     }
 

@@ -14,7 +14,7 @@ data class DogCreated(
     override val subType: String = "dog_created"
 
     companion object {
-        fun apply(dog: Dog): DogCreated =
+        operator fun invoke(dog: Dog): DogCreated =
             DogCreated(dog.id, dog.name, dog.shelterId, LocalDateTime.now())
     }
 }
