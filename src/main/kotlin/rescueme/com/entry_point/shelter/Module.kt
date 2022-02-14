@@ -11,8 +11,8 @@ import rescueme.com.entry_point.handleResult
 import rescueme.com.entry_point.shared.badRequest
 import rescueme.com.modules.shelter.Context
 import rescueme.com.modules.shelter.bindGetAll
+import rescueme.com.modules.shelter.bindGetById
 import rescueme.com.modules.shelter.bindGetByProvince
-import rescueme.com.modules.shelter.getById
 
 
 fun Application.module() {
@@ -28,7 +28,7 @@ fun Application.moduleWith(context: Context) {
             get("/{shelterId}") {
                 when (val shelterId = Option.fromNullable(call.parameters["shelterId"])) {
                     is None -> call.respond(badRequest("Shelter name required"))
-                    is Some -> call.respond(handleResult { context.getById(shelterId.value) })
+                    is Some -> call.respond(handleResult { context.bindGetById(shelterId.value) })
                 }
             }
             get("/filter") {
