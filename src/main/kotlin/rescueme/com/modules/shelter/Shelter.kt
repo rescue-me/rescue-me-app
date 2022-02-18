@@ -13,7 +13,7 @@ data class Shelter(
             Shelter(
                 ShelterId(id),
                 ShelterName(shelterName),
-                Province.apply(provinceName)
+                Province.from(provinceName)
             )
     }
 }

@@ -5,6 +5,6 @@ enum class Province(name: String) {
     GUADALAJARA("guadalajara");
 
     companion object {
-        fun apply(name: String) = values().first { it.name == name }
+        fun from(name: String) = values().first { it.name.lowercase() == name.lowercase() }
     }
 }
