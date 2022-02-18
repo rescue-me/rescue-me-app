@@ -3,7 +3,6 @@ package rescueme.com.entry_point.shelter
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.Some
-import arrow.core.toOption
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -32,7 +31,7 @@ fun Application.moduleWith(context: Context) {
                 }
             }
             get("/filter") {
-                call.request.queryParameters["province"].toOption().fold(
+                Option.fromNullable(call.request.queryParameters["province"]).fold(
                     ifEmpty = { badRequest("Filtering needs at least one filter") },
                     ifSome = { call.respond(handleResult { context.bindGetByProvince(it) }) }
                 )
