@@ -17,7 +17,7 @@ suspend fun <R> R.getById(shelterId: String): ShelterOutcome<Option<Shelter>> wh
         repository.getById(id)
     }
 
-suspend fun <R> R.bindPost(shelter: Shelter): ShelterOutcome<Shelter>
+suspend fun <R> R.createShelter(shelter: Shelter): ShelterOutcome<Shelter>
         where R : Has.ShelterRepository, R : Has.NotificationRepository =
     either {
         repository.save(shelter).also {
