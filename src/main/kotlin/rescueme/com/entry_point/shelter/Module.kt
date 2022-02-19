@@ -39,17 +39,14 @@ fun Application.moduleWith(context: Context) {
                 }
             }
             get("/filter") {
-                Option.fromNullable(call.request.queryParameters["province"]).fold(
-                    ifEmpty = { badRequest("Filtering needs at least one filter") },
-                    ifSome = { call.respond(handleResult { context.bindGetByProvince(it) }) }
-                )
+                Option.fromNullable(call.request.queryParameters["province"])
+                    .fold(ifEmpty = { badRequest("Filtering needs at least one filter") },
+                        ifSome = { call.respond(handleResult { context.bindGetByProvince(it) }) })
             }
             post {
                 val result = either<BadRequest, Shelter> {
-                    Either.catch { call.receive<ShelterPayload>() }
-                        .map { it.toShelter() }
-                        .mapLeft { badRequest(it.message ?: "Received an invalid shelter") }
-                        .bind()
+                    Either.catch { call.receive<ShelterPayload>().toShelter() }
+                        .mapLeft { badRequest("Received an invalid shelter") }.bind()
                 }
                 when (result) {
                     is Either.Left -> call.respond(result.value)

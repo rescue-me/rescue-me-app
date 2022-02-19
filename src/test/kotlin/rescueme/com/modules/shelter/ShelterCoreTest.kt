@@ -5,6 +5,8 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
+import rescueme.com.effects.repositories.kafka.NotificationTestRepository
+import rescueme.com.modules.shared.NotificationRepository
 import rescueme.com.modules.shared.ResourceNotFoundException
 import java.util.*
 
@@ -15,6 +17,7 @@ class ShelterCoreTest : FunSpec({
 
     val context = object : Context {
         override val repository: Repository = shelterRepository
+        override val notificationRepository: NotificationRepository = NotificationTestRepository
     }
     context("Create new shelter") {
 
