@@ -6,16 +6,16 @@ import arrow.core.Some
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import rescueme.com.effects.repositories.mongodb.MongoDBShelterRepository
 import rescueme.com.entry_point.handleResult
 import rescueme.com.entry_point.shared.badRequest
-import rescueme.com.modules.shelter.Context
-import rescueme.com.modules.shelter.bindGetAll
-import rescueme.com.modules.shelter.bindGetById
-import rescueme.com.modules.shelter.bindGetByProvince
+import rescueme.com.modules.shelter.*
 
 
 fun Application.module() {
-
+    moduleWith(object : Context {
+        override val repository: Repository = MongoDBShelterRepository()
+    })
 }
 
 fun Application.moduleWith(context: Context) {
