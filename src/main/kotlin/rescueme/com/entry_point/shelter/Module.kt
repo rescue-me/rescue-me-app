@@ -28,7 +28,7 @@ fun Application.module() {
         override val notificationRepository =
             KafkaMessagePublisher(
                 KafkaProducer(producerProps(producerConfig)),
-                Topic("dog_created")
+                Topic("shelter_created")
             )
     })
 }
