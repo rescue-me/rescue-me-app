@@ -4,7 +4,6 @@ import rescueme.com.modules.shared.Message
 import rescueme.com.modules.shelter.ShelterId
 import java.time.LocalDateTime
 
-
 data class DogCreated(
     val id: DogId,
     val name: DogName,

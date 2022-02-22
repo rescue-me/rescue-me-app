@@ -10,19 +10,26 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import org.apache.kafka.clients.producer.KafkaProducer
 import rescueme.com.effects.repositories.kafka.KafkaMessagePublisher
+import rescueme.com.effects.repositories.kafka.Topic
+import rescueme.com.effects.repositories.kafka.producerProps
 import rescueme.com.effects.repositories.mongodb.MongoDBShelterRepository
 import rescueme.com.entry_point.handleResult
 import rescueme.com.entry_point.shared.badRequest
-import rescueme.com.modules.shared.NotificationRepository
 import rescueme.com.modules.shelter.*
 
 typealias BadRequest = TextContent
 
 fun Application.module() {
+    val producerConfig = environment.config.config("kafka.producer")
     moduleWith(object : Context {
         override val repository: Repository = MongoDBShelterRepository()
-        override val notificationRepository: NotificationRepository = KafkaMessagePublisher()
+        override val notificationRepository =
+            KafkaMessagePublisher(
+                KafkaProducer(producerProps(producerConfig)),
+                Topic("dog_created")
+            )
     })
 }
 
@@ -40,7 +47,8 @@ fun Application.moduleWith(context: Context) {
             }
             get("/filter") {
                 Option.fromNullable(call.request.queryParameters["province"])
-                    .fold(ifEmpty = { badRequest("Filtering needs at least one filter") },
+                    .fold(
+                        ifEmpty = { badRequest("Filtering needs at least one filter") },
                         ifSome = { call.respond(handleResult { context.bindGetByProvince(it) }) })
             }
             post {
