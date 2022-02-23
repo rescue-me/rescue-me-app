@@ -1,0 +1,1 @@
+kafka-console-consumer --bootstrap-server localhost:19092 --topic dog_created --property print.key=true --from-beginning

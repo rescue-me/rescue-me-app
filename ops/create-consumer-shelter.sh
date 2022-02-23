@@ -1,0 +1,1 @@
+kafka-console-consumer --bootstrap-server localhost:19092 --topic shelter_created --property print.key=true --from-beginning

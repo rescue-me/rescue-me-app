@@ -49,8 +49,7 @@ fun Application.moduleWith(context: Context) {
             }
             post {
                 val result = either<BadRequest, Dog> {
-                    Either.catch { call.receive<DogPayload>() }
-                        .map { it.toDog() }
+                    Either.catch { call.receive<DogPayload>().toDog() }
                         .mapLeft { badRequest(it.message ?: "Received an invalid Dog") }
                         .bind()
                 }
