@@ -10,9 +10,12 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import org.apache.kafka.clients.producer.KafkaProducer
 import rescueme.com.effects.repositories.kafka.KafkaMessagePublisher
-import rescueme.com.effects.repositories.mongodb.MongoDBLayer.Companion.getLayer
+import rescueme.com.effects.repositories.kafka.Topic
+import rescueme.com.effects.repositories.kafka.producerProps
 import rescueme.com.effects.repositories.mongodb.MongoDBDogsRepository
+import rescueme.com.effects.repositories.mongodb.MongoDBLayer.Companion.getLayer
 import rescueme.com.entry_point.handleResult
 import rescueme.com.entry_point.shared.badRequest
 import rescueme.com.modules.dog.*
@@ -22,8 +25,12 @@ typealias BadRequest = TextContent
 
 fun Application.module() {
     moduleWith(object : Context {
+        val producerConfig = environment.config.config("kafka.producer")
         override val repository: Repository = MongoDBDogsRepository(getLayer())
-        override val notificationRepository: NotificationRepository = KafkaMessagePublisher()
+        override val notificationRepository: NotificationRepository = KafkaMessagePublisher(
+            KafkaProducer(producerProps(producerConfig)),
+            Topic("dog_created")
+        )
     })
 }
 

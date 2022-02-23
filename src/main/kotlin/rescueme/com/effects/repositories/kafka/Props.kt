@@ -7,7 +7,6 @@ import java.util.*
 fun producerProps(props: ApplicationConfig) =
     Properties().apply {
         this[ProducerConfig.BOOTSTRAP_SERVERS_CONFIG] = props.property("bootstrap.servers").getList()
-        this[ProducerConfig.CLIENT_ID_CONFIG] = props.property("client.id").getString()
         this[ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG] = props.property("key.serializer").getString()
         this[ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG] = props.property("value.serializer").getString()
     }
